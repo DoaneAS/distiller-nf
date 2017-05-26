@@ -1,5 +1,5 @@
 do_fastqc: True
-#do_stats: True
+do_stats: True
     
 
 # Fastqs can be provided as:
@@ -11,49 +11,52 @@ do_fastqc: True
 # two fastq.gz files
 input:
     raw_reads_paths:
-        MATalpha_R1:
+         NB_R1:
             lane1:
-                - ./test/fastq/MATalpha_R1/lane1/SRR2601842_1.fastq.gz
-                - ./test/fastq/MATalpha_R1/lane1/SRR2601842_2.fastq.gz
+#                - ./test/fastq/MATalpha_R1/lane1/SRR2601842_1.fastq.gz
+#                - ./test/fastq/MATalpha_R1/lane1/SRR2601842_2.fastq.gz
 #                 Alternatively, reads can be downloaded from SRA
-#                - sra:SRR2601842
+                 - sra:SRR4015020
+                 - sra:SRR4015021
 #                 - sra:SRR2601843?start=0&end=10000
+        NB_R2:
+            lane1:
+                 - sra:SRR4015022
             lane2:
-#                 Files can also be provided as http/ftp/s3 links
-                - https://github.com/mirnylab/distiller-test-data/raw/master/fastq/MATalpha_R1/lane2/SRR2601843_1.fastq.gz
-                - https://github.com/mirnylab/distiller-test-data/raw/master/fastq/MATalpha_R1/lane2/SRR2601843_2.fastq.gz
-#                - ./test/fastq/MATalpha_R1/lane2/SRR2601843_1.fastq.gz
-#                - ./test/fastq/MATalpha_R1/lane2/SRR2601843_2.fastq.gz
-        MATalpha_R2:
+                 - sra:SRR4015023
+                 - sra:SRR4015024
+                 - sra:SRR4015025
+                 - sra:SRR4015026
+         GCB_R1:
             lane1:
-                - ./test/fastq/MATalpha_R2/lane1/SRR2601845_1.fastq.gz
-                - ./test/fastq/MATalpha_R2/lane1/SRR2601845_2.fastq.gz
-        MATa_R1:
+                 - sra:SRR4015027
+                 - sra:SRR4015028
+                 - sra:SRR4015029
+                 - sra:SRR4015030
+         GCB_R2:
             lane1:
-                - ./test/fastq/MATa_R1/lane1/SRR2601848_1.fastq.gz
-                - ./test/fastq/MATa_R1/lane1/SRR2601848_2.fastq.gz
-        MATa_R2:
-            lane1:
-                - ./test/fastq/MATa_R2/lane1/SRR2601851_1.fastq.gz
-                - ./test/fastq/MATa_R2/lane1/SRR2601851_2.fastq.gz
-
+                 - sra:SRR4015031
+                 - sra:SRR4015032
+                 - sra:SRR4015033
+                 - sra:SRR4015034
+                 - sra:SRR4015035
     library_groups:
-        MATalpha:
-            - MATalpha_R1
-            - MATalpha_R2
-        MATa:
-            - MATa_R1
-            - MATa_R2
+          NB:
+            - NB_R1
+            - NB_R2
+         GCB:
+            - GCB_R1
+            - GCB_R2
         all:
-            - MATa_R1
-            - MATa_R2
-            - MATalpha_R1
-            - MATalpha_R2
+            - NB_R1
+            - NB_R2
+            - GCB_R1
+            - GCB_R2
 
     genome:
-        assembly: 'sacCer3'
-        bwa_index_wildcard: 'test/genome/sacCer3.fa.gz.*'
-        chrom_sizes_path: 'test/genome/sacCer3.reduced.chrom.sizes'
+        assembly: 'hg38'
+        bwa_index_wildcard: '/athena/elementolab/scratch/asd2007/reference/hg38/bwa_index/GRCh38_no_alt_analysis_set_GCA_000001405.15.fasta*'
+        chrom_sizes_path: '/athena/elementolab/scratch/asd2007/reference/hg38/hg38.chrom.sizes'
 
 map:
     chunksize: 6000
@@ -72,10 +75,9 @@ bin:
         - 100000
         - 40000
         - 20000
-        - 10000
 
 intermediates:
-    base_dir: 'test/intermediates/'
+    base_dir: 'data/intermediates/'
     dirs:
         downloaded_fastqs: 'downloaded_fastqs/'
         fastq_chunks: 'fastq_chunks'
@@ -84,7 +86,7 @@ intermediates:
         pairsam_library: 'pairsam/library'
 
 output:
-    base_dir: 'test/output/'
+    base_dir: 'data/output/'
     dirs:
         fastqc: 'fastqc/'
         pairs_library: 'pairs/library/'
